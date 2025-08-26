@@ -3,12 +3,13 @@ import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
 import { ValidationPipe } from '@nestjs/common';
 import chalk from 'chalk';
+import * as express from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
   });
-
+  app.use(express.json())
   // Enable CORS
   app.enableCors();
 
@@ -31,7 +32,7 @@ async function bootstrap() {
   await app.listen(port);
   logger.log(
     chalk.hex('#3DED97').bold('🚀 Application is running at: ') +
-      chalk.hex('#FFB3BA').underline(`http://localhost:${port}`),
+    chalk.hex('#FFB3BA').underline(`http://localhost:${port}`),
   );
 }
 bootstrap();
